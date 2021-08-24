@@ -1,10 +1,13 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
-import { Product } from './../entities/product.entity';
+import { Product } from '../entities/product.entity';
 import { CreateProductDto, UpdateProductDto } from './../dtos/products.dtos';
 
 @Injectable()
 export class ProductsService {
+  constructor(private configService: ConfigService) {};
   private counterId = 1;
   private products: Product[] = [
     {
@@ -18,6 +21,10 @@ export class ProductsService {
   ];
 
   findAll() {
+    const apiKey = this.configService.get('API_KEY')
+    const databaseName = this.configService.get('DATABASE_NAME')
+    console.log(apiKey);
+    console.log(databaseName);
     return this.products;
   }
 
@@ -30,7 +37,6 @@ export class ProductsService {
   }
 
   create(payload: CreateProductDto) {
-    console.log(payload);
     this.counterId = this.counterId + 1;
     const newProduct = {
       id: this.counterId,

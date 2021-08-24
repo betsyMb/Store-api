@@ -1,7 +1,13 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Param } from '@nestjs/common';
 
 @Controller('categories')
 export class CategoriesController {
+  @Get('category')
+  getCategories() {
+    return 'ola';
+  }
+
   @Get(':id/products/:productId')
   getCategory(@Param('productId') productId: string, @Param('id') id: string) {
     return `product ${productId} and ${id}`;
